@@ -32,6 +32,7 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Remix: So great, it's funny!</title>
         <Links />
+        {/* head안에 넣는건 global하게 적용되는 css  */}
       </head>
       <body>
         <Outlet />

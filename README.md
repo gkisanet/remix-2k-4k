@@ -59,6 +59,10 @@ const db = new PrismaClient();
 ```
 - 이렇게 seed.ts에 넣어도 되는데, 개발중에는 서버쪽 코드에 변경이 있을때 서버를 닫고 재시작하는게 번거롭다. 서버 변경이 있을때마다 새로운 db연결을 하게 해주는 db utils 생성
 - filename db에 server가 포함되면 서버코드임을 브라우져에 알려줌. 
+- Keeping in-memory server state across rebuilds
+  - When server code is re-imported, any server-side in-memory state is lost. That includes things like database connections, caches, in-memory data structures, etc.
+
+Here's a utility that remembers any in-memory values you want to keep around across rebuilds:
 
 ## read from db in a Remix loader
 
@@ -118,6 +122,22 @@ export const action = async ({ request }: ActionArgs) => {
 - 그러면 서버측에서는 어떻게 하지?
 - route module인 action function의 return 값은 loader function과 같았으면 하지. 그리고 action이 성공적으로 submit되면 실수로 이미 submit 한 값이 또 submit되지 않도록 redirect 되기를 원해
 - 혹은 useActionData로 mutation(form submit)을 했는데 에러가 발생하면 발생한 에러값이 사용자에게 표출되도록 하고 싶어. 
+
+## WAI-ARIA 
+- https://github.com/lezhin/accessibility/blob/master/aria/README.md#aria-invalid
+- 콘텐츠의 역할, 상태, 속성 정보를 제공
+- 모든 요소에 사용할 수 있는건 아니니 w3 명세에서 확인
+- aria-invalid 속성은 주로 input 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타냅니다. aria-errormessage 속성과 함께 사용하여 오류 설명을 제공할 수 있습니다.
+
+## Optional chaining
+- 존재하거나 하지 않을 수 있는 속성에 접근 , 함수 호출
+```javascript
+// what we did before optional chaining:
+const streetName = user && user.address && user.address.street.name
+
+// what we can do now:
+const streetName = user?.address?.street?.name
+```
 
 ## Authentication
 - HTTP cookies가 작동하는 법 공부하기

@@ -1,16 +1,16 @@
-import type {
-  LinksFunction,
-  LoaderArgs,
-} from "@remix-run/node"; import { json } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
 import stylesUrl from "~/styles/jokes.css";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 
-
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesUrl },
+  {
+    rel: "stylesheet",
+    href: stylesUrl,
+  },
 ];
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -25,7 +25,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 };
 export default function JokesRoute() {
   const data = useLoaderData<typeof loader>();
-  // loader를 type generic에 전달하면 auto-complete를 쓸수 잇다. 
+  // loader를 type generic에 전달하면 auto-complete를 쓸수 잇다.
 
   return (
     <div className="jokes-layout">
@@ -72,6 +72,13 @@ export default function JokesRoute() {
           </div>
         </div>
       </main>
+      <footer className="jokes-footer">
+        <div className="container">
+          <Link reloadDocument to="/jokes.rss">
+            RSS
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }

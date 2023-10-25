@@ -70,7 +70,8 @@
   border-top: 1px solid var(--color-border);
 }
 
-@media print, (min-width: 640px) {
+@media print,
+(min-width: 640px) {
   .jokes-header .logo {
     display: none;
   }
